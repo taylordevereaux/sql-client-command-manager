@@ -8,7 +8,6 @@ namespace SqlClient.CommandManager.Tests
         [Fact]
         public void TestConnections()
         {
-            
         }
     }
 }

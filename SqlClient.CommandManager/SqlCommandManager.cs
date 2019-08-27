@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SqlClient.CommandManager
+namespace System.Data.SqlClient.CommandManager
 {
     public class SqlCommandManager
     {
@@ -14,12 +14,32 @@ namespace SqlClient.CommandManager
             get { return _connectionString; }
             protected set { _connectionString = value; }
         }
-
         public SqlCommandManager(string connectionString)
         {
             this._connectionString = connectionString;
         }
-
+        public virtual T GetScalar<T>(string commandString, params SqlParameter[] parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(commandString, connection))
+                {
+                    return (T)command.ExecuteScalar();
+                }
+            }
+        }
+        public virtual async Task<T> GetScalarAsync<T>(string commandString, params SqlParameter[] parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(commandString, connection))
+                {
+                    return (T)await command.ExecuteScalarAsync();
+                }
+            }
+        }
         public virtual int ExecuteNonQuery(string commandString, params SqlParameter[] parameters)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -35,7 +55,6 @@ namespace SqlClient.CommandManager
                 }
             }
         }
-
         public virtual async Task<int> ExecuteNonQueryAsync(string commandString, params SqlParameter[] parameters)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -51,7 +70,6 @@ namespace SqlClient.CommandManager
                 }
             }
         }
-
         /// <summary>
         /// Executes a Data Reader for the parameters provided.
         /// </summary>
