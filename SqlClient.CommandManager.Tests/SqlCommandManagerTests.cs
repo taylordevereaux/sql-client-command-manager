@@ -3,12 +3,12 @@ using Xunit;
 
 namespace SqlClient.CommandManager.Tests
 {
-    public class UnitTest1
+    public class SqlCommandManagerTests
     {
         [Fact]
-        public void Test1()
+        public void TestConnections()
         {
-
+            
         }
     }
 }
