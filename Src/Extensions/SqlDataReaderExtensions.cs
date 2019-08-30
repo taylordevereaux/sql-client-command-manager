@@ -59,10 +59,15 @@ namespace System.Data.SqlClient.CommandManager.Extensions
         public static string GetStringNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetString);
         public static TimeSpan? GetTimeSpanNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetTimeSpan);
         public static object GetValueNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetValue);
-        public static T Populate<T>(this SqlDataReader reader, ExpressionMap expressionMap) where T : new()
+        public static T Populate<T>(this SqlDataReader reader, ExpressionMap<T> expressionMap)
+            where T : new()
+        {
+            return reader.Populate(expressionMap, new T());
+        }
+        public static T Populate<T>(this SqlDataReader reader, ExpressionMap<T> expressionMap, T returnRecord)
+            where T : new()
         {
             Type recordType = typeof(T);
-            T returnRecord = new T();
             for (int i = 0; i < expressionMap.Length; i++)
             {
                 recordType.GetProperty(expressionMap.Names[i]).SetValue(returnRecord, reader.GetValue(expressionMap.ColumnNames[i]));
@@ -71,9 +76,9 @@ namespace System.Data.SqlClient.CommandManager.Extensions
             return returnRecord;
         }
         public static List<T> SelectAll<T>(this SqlDataReader reader, params Expression<Func<T, object>>[] expressions)
-            where T : new()
+        where T : new()
         {
-            var expressionMap = GetExpressionMap(expressions);
+            var expressionMap = new ExpressionMap<T>(expressions);
 
             List<T> returnRecords = new List<T>();
 
@@ -85,9 +90,9 @@ namespace System.Data.SqlClient.CommandManager.Extensions
             return returnRecords;
         }
         public async static Task<List<T>> SelectAllAsync<T>(this SqlDataReader reader, params Expression<Func<T, object>>[] expressions)
-            where T : new()
+        where T : new()
         {
-            var expressionMap = GetExpressionMap(expressions);
+            var expressionMap = new ExpressionMap<T>(expressions);
 
             List<T> returnRecords = new List<T>();
 
@@ -99,31 +104,5 @@ namespace System.Data.SqlClient.CommandManager.Extensions
             return returnRecords;
         }
 
-        public static ExpressionMap GetExpressionMap<T>(this SqlDataReader reader, Expression<Func<T, object>>[] expressions) where T : new()
-        {
-            return GetExpressionMap(expressions);
-        }
-        private static ExpressionMap GetExpressionMap<T>(Expression<Func<T, object>>[] expressions) where T : new()
-        {
-            var expressionMap = new ExpressionMap(expressions.Length);
-            int length = expressions.Length;
-            for (int i = 0; i < length; ++i)
-            {
-                var member = expressions[i].GetMember();
-                expressionMap.Names[i] = member.Name;
-
-                var attribute = member.GetAttribute<DbColumnAttribute>();
-                if (attribute != null)
-                {
-                    expressionMap.ColumnNames[i] = attribute.Name;
-                }
-                else
-                {
-                    expressionMap.ColumnNames[i] = member.Name;
-                }
-            }
-
-            return expressionMap;
-        }
     }
 }
