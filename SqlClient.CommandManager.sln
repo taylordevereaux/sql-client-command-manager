@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlClient.CommandManager", "SqlClient.CommandManager\SqlClient.CommandManager.csproj", "{A366B457-C357-4C32-A26A-905547FF27C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlClient.CommandManager", "SqlClient.CommandManager.csproj", "{A366B457-C357-4C32-A26A-905547FF27C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlClient.CommandManager.Tests", "SqlClient.CommandManager.Tests\SqlClient.CommandManager.Tests.csproj", "{54A3D3DD-B81E-4BB1-990B-AB05A72415B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlClient.CommandManager.Tests", "Tests\SqlClient.CommandManager.Tests.csproj", "{54A3D3DD-B81E-4BB1-990B-AB05A72415B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

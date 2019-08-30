@@ -1,0 +1,8 @@
+{
+    "nxunitExplorer.modules": [
+        "**/bin/**/*.{dll,exe}",
+        "**/Tests/bin/**/*{dll}"
+    ],
+    "dotnet-test-explorer.autoExpandTree": true,
+    "dotnet-test-explorer.testProjectPath": "Tests\\"
+}

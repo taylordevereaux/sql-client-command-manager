@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.SqlClient.CommandManager;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SqlClient.CommandManager.Tests
@@ -13,9 +14,11 @@ namespace SqlClient.CommandManager.Tests
 
             SqlConnection connection = new SqlConnection("Server=localhost;Integrated security=SSPI;database=master");
 
-            string folderPath = System.AppContext.BaseDirectory;
+            string folderPath = Path.Combine(System.AppContext.BaseDirectory, "Data");
             String statement =
-                $@"CREATE DATABASE 
+                $@"
+                IF db_id(N'SqlCommandDatabase') IS NULL
+                CREATE DATABASE 
                     SqlCommandDatabase 
                 ON PRIMARY
                 (

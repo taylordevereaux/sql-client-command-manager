@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SqlClient.CommandManager</PackageId>
-    <Version>1.0.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Taylor Devereaux</Authors>
     <Description>Provides a helper class for easy ADO.Net queries and data reader tasks. As well, includes extension methods to easily read data for specific column names.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -20,5 +20,9 @@
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
   </ItemGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>Tests\**</DefaultItemExcludes>
+  </PropertyGroup>
 
 </Project>

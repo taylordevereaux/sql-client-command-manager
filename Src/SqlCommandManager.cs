@@ -95,8 +95,9 @@ namespace System.Data.SqlClient.CommandManager
         /// <summary>
         /// Executes a Data Reader for the parameters provided.
         /// </summary>
-        public virtual async Task ExecuteReaderAsync(string commandString, SqlParameter[] parameters, Action<SqlDataReader> reader)
+        public virtual async Task<T> ExecuteReaderAsync<T>(string commandString, SqlParameter[] parameters, Func<SqlDataReader, Task<T>> reader)
         {
+            T result;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = new SqlCommand(commandString, connection))
@@ -106,10 +107,11 @@ namespace System.Data.SqlClient.CommandManager
                     await connection.OpenAsync();
                     using (SqlDataReader dataReader = await command.ExecuteReaderAsync())
                     {
-                        reader(dataReader);
+                        result = await reader(dataReader);
                     }
                 }
             }
+            return result;
         }
         /// <summary>
         /// Sets up the default fields for the Execute Reader Command.
