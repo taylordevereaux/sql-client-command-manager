@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SqlClient.CommandManager</PackageId>
-    <Version>0.1.1</Version>
+    <Version>1.0.1</Version>
     <Authors>Taylor Devereaux</Authors>
     <Description>Provides a helper class for easy ADO.Net queries and data reader tasks. As well, includes extension methods to easily read data for specific column names.</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -11,6 +11,7 @@
     <PackageTags>SQL,C#,SqlClient,ADO.Net,SqlDataReader,aspnetcore,SqlServer,Database</PackageTags>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <UserSecretsId>92481fed-bf3e-4abf-96b8-caf00d0c1e20</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,1 @@
+dotnet nuget push bin/Release/SqlClient.CommandManager.<version>.nuget -k <api-key> -s https://api.nuget.org/v3/index.json
