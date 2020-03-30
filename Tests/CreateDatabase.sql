@@ -1,35 +1,37 @@
-IF db_id(N'SqlCommandDatabase') IS NULL
-BEGIN
-    CREATE DATABASE 
-        SqlCommandDatabase 
-    ON PRIMARY
-    (
-        NAME = SqlCommandDatabase,
-        FILENAME = '{folderPath}\SqlCommandDatabaseData.mdf',
-        SIZE = 2MB, 
-        MAXSIZE = 10MB, 
-        FILEGROWTH = 10 %
-    )
-    LOG ON
-    (
-        NAME = SqlCommandDatabase_Log,
-        FILENAME = '{folderPath}\SqlCommandDatabase_Log.ldf',
-        SIZE = 1MB,
-        MAXSIZE = 5MB,
-        FILEGROWTH = 10 %
-    )
-END
+USE [master]
 GO
 
-IF OBJECT_ID(N'dbo.User') IS NULL
-BEGIN
-    create table [User]
-    (
-        Id UNIQUEIDENTIFIER PRIMARY KEY,
-        FirstName varchar(255),
-        LastName varchar(255),
-        DateOfBirth date,
-        LastLoginTime datetimeoffset,
-    )
+IF db_id(N'SqlCommandManager.Tests') IS NULL
+CREATE DATABASE [SqlCommandManager.Tests]
+GO
 
-END
+USE [SqlCommandManager.Tests]
+GO
+
+IF OBJECT_ID(N'dbo.TestValues') IS NULL
+CREATE TABLE [dbo].[TestValues]
+(
+    GuidValue [uniqueidentifier] null,
+    StringValue nvarchar(50) null,
+    CharValue char(10),
+    DateTimeValue datetime,
+    DateTimeOffsetValue datetimeoffset(7),
+    DecimalValue decimal(18,0),
+    DoubleValue float,
+    IntValue int,
+    TimeSpanValue time(7),
+    StreamValue varbinary(MAX)
+)
+GO
+
+
+
+select newID(),
+    'Sql Command Manager Test Record',
+    CHAR(56),
+    GETDATE(),
+    SYSDATETIMEOFFSET(),
+    47.8,
+    153.4532,
+    48,
+    

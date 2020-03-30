@@ -51,7 +51,9 @@ namespace System.Data.SqlClient.CommandManager.Extensions
         public static decimal? GetDecimalNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDecimal);
         public static double? GetDoubleNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDouble);
         public static float? GetFloatNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetFloat);
-        public static Guid? GetGuidNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetGuid);
+        public static Guid? GetGuidNullable(this SqlDataReader reader, string name) => reader.HasColumnAndValue(name)
+            ? reader.GetGuid(name)
+            : new Nullable<Guid>();
         public static Int16? GetInt16Nullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetInt16);
         public static Int32? GetInt32Nullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetInt32);
         public static Int64? GetInt64Nullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetInt64);

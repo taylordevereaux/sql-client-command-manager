@@ -17,25 +17,25 @@ namespace SqlClient.CommandManager.Tests
             string folderPath = Path.Combine(System.AppContext.BaseDirectory, "Data");
             String statement =
                 $@"
-                IF db_id(N'SqlCommandDatabase') IS NULL
-                CREATE DATABASE 
-                    SqlCommandDatabase 
+                IF db_id(N'SqlCommandManager.Tests') IS NULL
+                CREATE DATABASE [SqlCommandDatabase.Tests]
                 ON PRIMARY
                 (
-                    NAME = SqlCommandDatabase,
-                    FILENAME = '{folderPath}\SqlCommandDatabaseData.mdf',
+                    NAME = N'SqlCommandDatabase.Tests',
+                    FILENAME = '{folderPath}\SqlCommandDatabase.Tests.mdf',
                     SIZE = 2MB, 
                     MAXSIZE = 10MB, 
                     FILEGROWTH = 10 %
                 )
                 LOG ON
                 (
-                    NAME = SqlCommandDatabase_Log,
-                    FILENAME = '{folderPath}\SqlCommandDatabase_Log.ldf',
+                    NAME = N'SqlCommandDatabase.Tests_log',
+                    FILENAME = '{folderPath}\SqlCommandDatabase.Tests.ldf',
                     SIZE = 1MB,
                     MAXSIZE = 5MB,
                     FILEGROWTH = 10 %
-                )";
+                );
+                GO";
 
             SqlCommand command = new SqlCommand(statement, connection);
             try
