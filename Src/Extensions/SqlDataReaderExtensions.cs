@@ -46,8 +46,12 @@ namespace System.Data.SqlClient.CommandManager.Extensions
         public static bool? GetBooleanNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetBoolean);
         public static byte? GetByteNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetByte);
         public static char? GetCharNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetChar);
-        public static DateTime? GetDateTimeNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDateTime);
-        public static DateTimeOffset? GetDateTimeOffsetNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDateTimeOffset);
+        public static DateTime? GetDateTimeNullable(this SqlDataReader reader, string name) => reader.HasColumnAndValue(name)
+            ? reader.GetDateTime(name)
+            : new Nullable<DateTime>();
+        public static DateTimeOffset? GetDateTimeOffsetNullable(this SqlDataReader reader, string name) => reader.HasColumnAndValue(name)
+            ? reader.GetDateTimeOffset(name)
+            : new Nullable<DateTimeOffset>();
         public static decimal? GetDecimalNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDecimal);
         public static double? GetDoubleNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetDouble);
         public static float? GetFloatNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetFloat);
@@ -59,7 +63,9 @@ namespace System.Data.SqlClient.CommandManager.Extensions
         public static Int64? GetInt64Nullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetInt64);
         public static Stream GetStreamNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetStream);
         public static string GetStringNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetString);
-        public static TimeSpan? GetTimeSpanNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetTimeSpan);
+        public static TimeSpan? GetTimeSpanNullable(this SqlDataReader reader, string name) => reader.HasColumnAndValue(name)
+            ? reader.GetTimeSpan(name)
+            : new Nullable<TimeSpan>();
         public static object GetValueNullable(this SqlDataReader reader, string name) => GetNullable(reader, name, reader.GetValue);
     }
 }
